@@ -1,0 +1,1 @@
+{"filter":false,"title":"www - Stopped","tooltip":"www - Stopped","undoManager":{"mark":0,"position":-1,"stack":[]},"output":{"id":"output733561","width":1318,"height":208,"scrollTop":-1,"config":{"debug":true,"command":"bin/www","runner":"Node.js (default)","env":{"DEBUG":"main"},"name":"www"}},"timestamp":1427052596259,"hash":"67452301efcdab8998badcfe10325476c3d2e1f0"}
