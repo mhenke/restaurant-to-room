@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var userService = require('../services/user-service');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -8,24 +9,24 @@ router.get('/', function(req, res, next) {
 
 router.get('/create', function(req, res, next) {
   var vm = {
-    title: 'Create a account'
-  }
-  res.render('users/create', vm)
+    title: 'Create an account'
+  };
+  res.render('users/create', vm);
 });
 
 router.post('/create', function(req, res, next) {
-  var somethingGoesWrong = false;
-  if (somethingGoesWrong) {
-    var vm = {
-      title: 'Create a account',
-      input: req.body,
-      error: 'Somthing went wrong'
+  userService.addUser(req.body, function(err) {
+    if (err) {
+      var vm = {
+        title: 'Create an account',
+        input: req.body,
+        error: 'Something went wrong'
+      };
+      delete vm.input.password;
+      return res.render('users/create', vm);
     }
-    delete vm.input.password;
-    return res.render('users/create', vm)
-  }
-  
-  res.redirect('/orders')
+    res.redirect('/orders');
+  });
 });
 
 module.exports = router;
