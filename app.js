@@ -4,8 +4,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var passport = require("passport");
-var expressSession = require("express-session");
+var passport = require('passport');
+var expressSession = require('express-session');
+var flash = require('connect-flash');
+var connectMongo = require('connect-mongo');
+var MongoStore = connectMongo(expressSession);
 
 var config = require('./config');
 var routes = require('./routes/index');
@@ -13,6 +16,7 @@ var users = require('./routes/users');
 var orders = require('./routes/orders');
 
 var passportConfig = require('./auth/passport-config');
+var restrict = require('./auth/restrict');
 passportConfig();
 
 mongoose.connect(config.mongoUri);
@@ -32,16 +36,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressSession(
     {
         secret: 'getting hungry',
-        saveUninitialize: false,
-        resave: false
+        saveUninitialized: false,
+        resave: false,
+        store: new MongoStore({
+           mongooseConnection: mongoose.connection 
+        })
     }
 ));
-
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
+//app.use(restrict);
 app.use('/orders', orders);
 
 // catch 404 and forward to error handler
