@@ -1,0 +1,13 @@
+<div class="textwidget margin-top-30">
+    <h1 ng-bind="vm.restaurant.name"></h1>
+</div>
+<strong ng-show="!vm.restaurant"></strong>
+<div class="widget">
+    <div class="category" ng-repeat="cat in vm.restaurant.menu">
+        <h2 ng-bind="cat.name"></h2>
+        <ul>
+            <li ng-repeat="item in cat.category"><a href="#"><strong>Carrots</strong></a> - 4.00 - <em>root vegetables, usually orange</em>
+            </li>
+        </ul>
+    </div>
+</div>

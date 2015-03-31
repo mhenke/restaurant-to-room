@@ -5,7 +5,14 @@
     .module('app')
     .controller('RestaurantsController', RestaurantsController);
     
-    function RestaurantsController() {
-      this.data = 'the data'; // use {{vm.data}} in the view
+    RestaurantsController.$inject = ['api'];
+    
+    function RestaurantsController(api) {
+      var vm = this;
+      
+      api.getRestaurants()
+        .then(function(data) {
+          vm.restaurants = data;
+        });
     }
 }());
