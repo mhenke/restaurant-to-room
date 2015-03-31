@@ -1,17 +1,18 @@
 (function() {
-    'use strict';
+  'use strict';
+  
+  angular
+    .module('app')
+    .controller('MenuController', MenuController);
     
-    angular
-        .module('app')
-        .controller('MenuController', MenuController);
-        
-    MenuController.$inject = ['api','$routeParams'];
+  MenuController.$inject = ['api', '$routeParams'];
+  
+  function MenuController(api, $routeParams) {
+    var vm = this;
     
-    function MenuController(api,$routeParams.restId) {
-        var vm = this;
-        api.getRestaurantDatails()
-            .then(function(data) {
-                vm.restaurant = data;
-            })
-    }
+    api.getRestaurantDetails($routeParams.restId)
+      .then(function(data) {
+        vm.restaurant = data;
+      });
+  }
 }());
